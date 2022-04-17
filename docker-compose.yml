@@ -1,4 +1,4 @@
-version: "3.10"
+version: "3"
 
 services:
   nginx-proxy:
@@ -14,6 +14,14 @@ services:
       - ./nginx/proxy.conf/:/etc/nginx/proxy.conf
       - ./static/:/news_board_API/static
       - ./media/:/news_board_API/media
+  postgres:
+    image: postgres:9.6.6
+    restart: always
+    volumes:
+      - ./pgdb/:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file: ./.env
 
   redis:
     container_name: redis
@@ -23,30 +31,6 @@ services:
     restart: on-failure
     command: [ "redis-server", "--appendonly", "yes" ]
     hostname: redis
-
-  postgres:
-    image: postgres
-    volumes:
-      - ./pgdb:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    env_file: ./.env
-
-  web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: "always"
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/code/
-      # - ./static/:/code/static
-      # - ./media/:/code/media
-    depends_on:
-      - "postgres"
-    env_file: ./.env
 
   celery:
     build:
@@ -60,6 +44,22 @@ services:
       - postgres
     depends_on:
       - "redis"
+      - "postgres"
+    env_file: ./.env
+
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "always"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code/
+      - ./static/:/code/static
+      - ./media/:/code/media
+    depends_on:
       - "postgres"
     env_file: ./.env
 

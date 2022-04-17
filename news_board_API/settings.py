@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
@@ -28,8 +29,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", None)
 DEBUG = not os.environ.get("DEBUG", False) == "False"
 PROD = not DEBUG
 
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = ["3.141.41.186", "localhost"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -86,7 +86,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-
 # CHANNEL_LAYERS = {
 #     'default': {
 #         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -98,9 +97,9 @@ REST_FRAMEWORK = {
 
 WSGI_APPLICATION = "news_board_API.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
 
 if PROD:
     DATABASES = {
@@ -117,11 +116,11 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.environ.get("POSTGRES_DB"),
-            "USER": os.environ.get("POSTGRES_USER"),
-            "PORT": os.environ.get("POSTGRES_PORT"),
-            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-            "HOST": "localhost",
+            "NAME": "name_news_board_db",
+            "USER": "user_news_board_db",
+            "PORT": 5432,
+            "PASSWORD": "password",
+            "HOST": "127.0.0.1",
         }
     }
 
@@ -142,7 +141,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -174,7 +172,6 @@ else:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 if PROD:
     CELERY_BROKER_URL = "redis://redis:6379"
