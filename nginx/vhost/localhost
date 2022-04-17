@@ -1,0 +1,7 @@
+location /static/ {
+    alias /news_board_API/static/;
+}
+
+location /media/ {
+    alias /news_board_API/media/;
+}
