@@ -24,10 +24,10 @@ services:
     command: [ "redis-server", "--appendonly", "yes" ]
     hostname: redis
 
-  db:
+  postgres:
     image: postgres
     volumes:
-      - ./pgdb/db:/var/lib/postgresql/data
+      - ./pgdb:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     env_file: ./.env
@@ -45,7 +45,7 @@ services:
       # - ./static/:/code/static
       # - ./media/:/code/media
     depends_on:
-      - "db"
+      - "postgres"
     env_file: ./.env
 
   celery:
@@ -57,10 +57,10 @@ services:
     command: celery -A news_board_API worker -l info -B
     links:
       - redis
-      - db
+      - postgres
     depends_on:
       - "redis"
-      - "db"
+      - "postgres"
     env_file: ./.env
 
 networks:

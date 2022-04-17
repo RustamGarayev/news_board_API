@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", None)
 DEBUG = not os.environ.get("DEBUG", False) == "False"
 PROD = not DEBUG
 
-ALLOWED_HOSTS = ["3.141.41.186"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -102,16 +102,28 @@ WSGI_APPLICATION = "news_board_API.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("POSTGRES_DB"),
-        "USER": os.environ.get("POSTGRES_USER"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-        "HOST": os.environ.get("POSTGRES_HOST") if not DEBUG else "localhost",
-        "PORT": os.environ.get("POSTGRES_PORT"),
+if PROD:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("POSTGRES_DB"),
+            "USER": os.environ.get("POSTGRES_USER"),
+            "PORT": os.environ.get("POSTGRES_PORT"),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+            "HOST": os.environ.get("POSTGRES_HOST"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.environ.get("POSTGRES_DB"),
+            "USER": os.environ.get("POSTGRES_USER"),
+            "PORT": os.environ.get("POSTGRES_PORT"),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+            "HOST": "localhost",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
