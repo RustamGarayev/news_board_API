@@ -1,0 +1,3 @@
+STAGED_FILES = $(git status -s | grep -E '\.py$' | cut -c 4-)
+flake8 $STAGED_FILES
+isort . --check --diff $STAGED_FILES

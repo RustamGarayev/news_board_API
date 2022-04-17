@@ -8,39 +8,90 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='NewsPost',
+            name="NewsPost",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255, verbose_name='Title')),
-                ('author_name', models.CharField(max_length=100, verbose_name='Author Name')),
-                ('link', models.URLField(verbose_name='Link')),
-                ('number_of_upvote', models.IntegerField(default=0, verbose_name='Amount of Upvote')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(max_length=255, verbose_name="Title"),
+                ),
+                (
+                    "author_name",
+                    models.CharField(
+                        max_length=100, verbose_name="Author Name"
+                    ),
+                ),
+                ("link", models.URLField(verbose_name="Link")),
+                (
+                    "number_of_upvote",
+                    models.IntegerField(
+                        default=0, verbose_name="Amount of Upvote"
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="Creation Date"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'News Post',
-                'verbose_name_plural': 'News Posts',
-                'ordering': ('-created_at',),
+                "verbose_name": "News Post",
+                "verbose_name_plural": "News Posts",
+                "ordering": ("-created_at",),
             },
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('author_name', models.CharField(max_length=100, verbose_name='Author Name')),
-                ('content', models.TextField(verbose_name='Content')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Creation Date')),
-                ('news_post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='core.newspost', verbose_name='News Post')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "author_name",
+                    models.CharField(
+                        max_length=100, verbose_name="Author Name"
+                    ),
+                ),
+                ("content", models.TextField(verbose_name="Content")),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="Creation Date"
+                    ),
+                ),
+                (
+                    "news_post",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments",
+                        to="core.newspost",
+                        verbose_name="News Post",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Comment',
-                'verbose_name_plural': 'Comments',
-                'ordering': ('-created_at',),
+                "verbose_name": "Comment",
+                "verbose_name_plural": "Comments",
+                "ordering": ("-created_at",),
             },
         ),
     ]

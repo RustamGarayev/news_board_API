@@ -5,9 +5,13 @@ class NewsPost(models.Model):
     title = models.CharField(verbose_name="Title", max_length=255)
     author_name = models.CharField(verbose_name="Author Name", max_length=100)
     link = models.URLField(verbose_name="Link")
-    number_of_upvote = models.IntegerField(verbose_name="Amount of Upvote", default=0)
+    number_of_upvote = models.IntegerField(
+        verbose_name="Amount of Upvote", default=0
+    )
 
-    created_at = models.DateTimeField(verbose_name="Creation Date", auto_now_add=True)
+    created_at = models.DateTimeField(
+        verbose_name="Creation Date", auto_now_add=True
+    )
 
     class Meta:
         ordering = ("-created_at",)

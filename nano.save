@@ -1,0 +1,3 @@
+flake8 $(git status -s | grep -E '\.py$' | cut -c 4-)
+echo "Hook succeded!"
+exit 0
