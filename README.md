@@ -33,6 +33,7 @@ In order to run it manually:
 
 This action was defined as pre-commit hook, at each commit it will reformat your code base.
 For activating pre-commit run locally:
+
 `pre-commit install`
 
 In each commit, the code base will nicely be formatted.
