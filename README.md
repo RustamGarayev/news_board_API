@@ -5,9 +5,13 @@
 Simple enough:
 
 `cd _development/`
+
 `docker-compose up --build -d`
+
 `cd ..`
+
 `celery --app=news_board_API.celery:app worker -B --loglevel=INFO`
+
 
 Also, you can find postman exported json file in this repo, just import it in Postman and you will have necessary endpoints to test.
 
